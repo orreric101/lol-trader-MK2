@@ -182,7 +182,36 @@ def init_socket():
     loop.run_until_complete(open_socket(data_streams[:1]))
 
 
+def clear_balance():
+    account_bals = client.get_account()['balances']
+    print(account_bals)
+    for coin in account_bals:
+        ticker = coin['asset']+'BUSD'
+        amount = float(coin['free'])
+        if coin['asset'] not in invalid_quoteAsset and float(amount) > 0:
+            print(coin, ticker)
+            price = float(client.get_recent_trades(symbol=ticker)[-1]['price'])
+            maxQty = float(client.get_symbol_info(ticker)['filters'][2]['maxQty'])
+            if amount > maxQty:
+                while amount >= maxQty:
+                    client.order_market_sell(symbol=ticker, quantity=maxQty)
+                    amount -= maxQty
+            client.order_market_sell(symbol=ticker, quantity=amount)
+    print(client.get_account()['balances'])
+
+
 if __name__ == "__main__":
     # print(get_hist_data(start_date=str(time()-60*60*24), end_date=str(time())))
-    print(client.get_account())
+    # print(client.get_exchange_info()['symbols'])
+    valid_tickers = {}
+    invalid_quoteAsset = ['USDT', 'BUSD']
+    for symbol in client.get_exchange_info()['symbols']:
+        base = symbol['baseAsset']
+        if symbol['baseAsset'] not in valid_tickers.keys():
+            valid_tickers[base] = []
+        valid_tickers[base].append(base+symbol['quoteAsset'])
+    print(valid_tickers)
+    clear_balance()
+    client.order_market_buy(symbol='BTCBUSD', quoteOrderQty=1000)
+    print(client.get_account()['balances'])
 

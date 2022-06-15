@@ -69,7 +69,7 @@ async def open_socket(ticker, interval='1m'):
 
 
 def init_socket():
-    ticker = 'LTCUSDT'
+    ticker = 'BTCBUSD'
     loop = asyncio.get_event_loop()
     loop.run_until_complete(open_socket(ticker, interval='1m'))
 

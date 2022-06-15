@@ -15,9 +15,9 @@ from datetime import datetime, timedelta
 from time import time
 import pandas as pd
 
-api_key = "5zt3nLqIbfc4b2g0iT1aiI0rxWrD16KNNETF3Fc3xyVDORP0s4J44bcObkNQHgKN"
-api_secret = "7G6wg0NhGtrSIGtX8FXEAlgia3I6pFVPj6sa52nvUdgaV6tCyuHJ3OZkZBb1N08R"
-client = Client(api_key, api_secret, testnet=True)
+api_key = "8BVVt4nlaB77zzuRtHLdVvQS7wemQQI1mIQDc9pENhIZCHZNYWVs3CwA9QTEyb5d"
+api_secret = "Fuf2USPB2UY372WbULiuh265R3FIqBoL2IsFbUFX8wzvy2nG68m3znzPg6sCWj7k"
+client = Client(api_key, api_secret)
 
 
 def get_quote_coins(base):
